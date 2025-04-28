@@ -24,12 +24,28 @@ Node* buildTree(const int* values, int size) {
 
 void printTree(Node* root, std::string prefix, bool isLeft) {
     if (root == nullptr) return;
+
     std::cout << prefix;
     std::cout << (isLeft ? "├──" : "└──");
-    std::cout << root->data << std::endl;
+
+    bool isLeaf = (root->left == nullptr && root->right == nullptr);
+    if (isLeaf) {
+        std::cout << "\033[1;32m"; // Устанавливаем зеленый жирный цвет для листа
+    }
+
+    std::cout << root->data;
+
+    if (isLeaf) {
+        std::cout << "\033[0m";
+    }
+
+    std::cout << std::endl;
+
     printTree(root->left, prefix + (isLeft ? "│   " : "    "), true);
     printTree(root->right, prefix + (isLeft ? "│   " : "    "), false);
 }
+
+
 
 void deleteTree(Node* root) {
     if (!root) return;
